@@ -1,36 +1,50 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Portfolio site
 
-## Getting Started
+A personal portfolio for Xiaoqian Zhai built with Next.js (App Router),
+TypeScript, and Tailwind CSS. Fully static pages plus a contact form that
+saves submissions on the server through a server action.
 
-First, run the development server:
+## Requirements
 
-```bash
+- Node.js (with npm)
+
+## How to run
+
+From this folder (`portfolio/`):
+
+```
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open http://localhost:3000. For a production build:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```
+npm run build
+npm run start
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Lint and type checks run as part of `npm run build` (or `npm run lint`).
 
-## Learn More
+## Pages
 
-To learn more about Next.js, take a look at the following resources:
+- `/` — landing page with intro, highlights, and links
+- `/about-me` — background, education, skills
+- `/projects` — project cards
+- `/projects/[slug]` — project detail pages (`greencity-logistics`,
+  `analytics-showdown-gna`); unknown slugs show a scoped 404 page
+- `/contact-me-server-form` — contact form; submissions are validated on the
+  server and appended to `data/contact-submissions.json` (file is created on
+  first submission; it is gitignored)
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Where things live
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- `lib/projects.ts` — project data (single source for the list and detail pages)
+- `lib/contact.ts` — contact form validation and JSON storage (reusable by a
+  future `/api/contact` route)
+- `app/contact-me-server-form/actions.ts` — the server action
+- `components/` — shared UI (site nav, project card, contact form)
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+This project was developed with **Viber** (an AI coding agent) in incremental
+steps. All code was reviewed, tested, and verified by the author, who is
+responsible for the final work.

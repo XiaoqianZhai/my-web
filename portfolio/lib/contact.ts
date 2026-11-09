@@ -18,7 +18,7 @@ export function validateContactForm(
 ): ContactFieldErrors {
   const errors: ContactFieldErrors = {};
   const name = values.name.trim();
-  const email = values.email.trim();
+  const email = values.email;
   const message = values.message.trim();
 
   if (!name) {
@@ -28,10 +28,10 @@ export function validateContactForm(
     errors.message = "Message can't be blank.";
   }
 
-  if (!email) {
+  if (!email.trim()) {
     errors.email = "Email can't be blank.";
   } else if (/\s/.test(email)) {
-    errors.email = "Email can't contain spaces.";
+    errors.email = "Email can't contain whitespace.";
   } else if (email.indexOf("@") === -1 || email.indexOf("@") !== email.lastIndexOf("@")) {
     errors.email = "Email must contain exactly one @.";
   } else {
