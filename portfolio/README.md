@@ -32,7 +32,7 @@ Lint and type checks run as part of `npm run build` (or `npm run lint`).
 - `/about-me` — background, education, skills
 - `/projects` — project cards
 - `/projects/[slug]` — project detail pages (`uber-practicum`,
-  `portfolio-website`); unknown slugs show a scoped 404 page
+  `alibaba-fliggy`); unknown slugs show a scoped 404 page
 - `/contact-me-server-form` — contact form; submissions are validated on the
   server and appended to `data/contact-submissions.json` (file is created on
   first submission; it is gitignored)

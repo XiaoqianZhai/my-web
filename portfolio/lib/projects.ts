@@ -22,15 +22,17 @@ export const projects: Project[] = [
     ],
   },
   {
-    slug: "portfolio-website",
-    title: "Portfolio Website",
+    slug: "alibaba-fliggy",
+    title: "Operations at Alibaba (Fliggy)",
     summary:
-      "This site itself: a class project for ISBA 2438 built with Next.js (App Router), TypeScript, and Tailwind CSS, developed with the Viber coding agent.",
-    role: "Solo project, developed with the Viber coding agent.",
-    tools: ["Next.js (App Router)", "TypeScript", "Tailwind CSS"],
+      "Worked in operations at Fliggy, Alibaba's travel platform, covering payment collections, website optimization, and user relationship management.",
+    role: "Operations in the Fliggy department.",
+    tools: [],
     details: [
-      "Dynamic project detail pages rendered from a single shared data file.",
-      "Contact form with server-side validation that saves submissions to a JSON file.",
+      "Worked in operations for Fliggy, Alibaba's travel platform.",
+      "Handled payment collections.",
+      "Worked on website optimization.",
+      "Worked on user relationship management.",
     ],
   },
 ];
