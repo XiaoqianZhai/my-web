@@ -115,32 +115,20 @@ Note: remote switched to `git@github.com:XiaoqianZhai/my-web.git`, host key acce
 
 Note: replaced both projects in `lib/projects.ts`, made the home-page highlight derive project titles from the data, removed the education TODO lines, updated the README slug list. Old slugs now 404. Commit `f73319b`.
 
-## 15. Replace portfolio-website with Alibaba (Fliggy)
-
-> change of plan for project 2: replace the portfolio-website project with my work at Alibaba. slug "alibaba-fliggy", title something like "Operations at Alibaba (Fliggy)". I worked in operations in the Fliggy department (Alibaba's travel platform): payment collections, website optimization, and user relationship management. same rules as Uber: high level only, no numbers, don't make up tools, results or dates. update anything else that mentions the portfolio-website project, check both slugs work and /projects/portfolio-website now 404s, then commit and push.
-
-Note: `portfolio-website` replaced with `alibaba-fliggy`; README updated. Both current slugs verified 200 with their own content, all three removed slugs verified 404. Commit `b1273f0`.
-
-## 16. Open files in VS Code for the demo video
+## 15. Open files in VS Code for the demo video
 
 > open the portfolio folder in VS Code (open -a "Visual Studio Code") with these files open so I can show them in my video: components/ContactForm.tsx, app/contact-me-server-form/actions.ts, lib/contact.ts. don't change any code.
 
 Note: opened the folder in VS Code with those three files as tabs; no code changed.
 
-## 17. About page education line
+## 16. About page education line
 
 > on the about page, change the undergrad line to "Bachelor's in Cultural Industry Management, Sichuan Normal University" and mention Sichuan Normal University in the intro paragraph too. don't add years or other details. check the page, then commit and push.
 
 Note: intro paragraph and education entry on `/about-me` now mention Sichuan Normal University. Commit `d412138`.
 
-## 18. Check for accidental hand edits
+## 17. Check for accidental hand edits
 
 > I think I accidentally changed something in the code by hand. can you check git status and git diff and tell me what changed? don't fix or revert anything yet.
 
 Note: working tree was clean — no tracked files had changed; only the long-standing untracked Python assignment files were listed.
-
-## 19. This prompt log
-
-> my teacher wants the prompt log on github. please create PROMPTS.md in the repo root (next to the portfolio folder) that lists every message I sent you in this session, in order, copied exactly as I wrote them (don't rewrite, shorten or fix them), including my answers to your questions. under each one add a short note on what changed and the commit hash if there was one. at the top write: "Prompt log for Assignment 2 (portfolio website), Viber session. Some prompts were drafted with help from Claude." commit only PROMPTS.md (not the python files) and push, then tell me the new commit hash.
-
-Note: created this file and committed it.
