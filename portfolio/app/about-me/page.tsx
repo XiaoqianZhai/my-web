@@ -12,8 +12,8 @@ export default function AboutPage() {
         <p className="text-foreground/80">
           I&apos;m Xiaoqian Zhai, an MSBA candidate at Santa Clara University
           based in the San Francisco Bay Area. I completed my undergraduate
-          studies in Cultural Industry Management before moving into business
-          analytics.
+          studies in Cultural Industry Management at Sichuan Normal University
+          before moving into business analytics.
         </p>
       </div>
 
@@ -27,7 +27,8 @@ export default function AboutPage() {
           </li>
           <li>
             <p className="font-medium">
-              Undergraduate background in Cultural Industry Management
+              Bachelor&apos;s in Cultural Industry Management, Sichuan Normal
+              University
             </p>
           </li>
         </ul>
