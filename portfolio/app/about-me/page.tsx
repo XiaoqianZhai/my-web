@@ -24,18 +24,10 @@ export default function AboutPage() {
             <p className="font-medium">
               M.S. in Business Analytics, Santa Clara University
             </p>
-            {/* TODO: add expected graduation year */}
-            <p className="text-sm text-foreground/60">
-              TODO: expected graduation year
-            </p>
           </li>
           <li>
             <p className="font-medium">
-              Undergraduate degree in Cultural Industry Management
-            </p>
-            {/* TODO: add institution, degree name, and years attended */}
-            <p className="text-sm text-foreground/60">
-              TODO: institution, degree name, and years attended
+              Undergraduate background in Cultural Industry Management
             </p>
           </li>
         </ul>

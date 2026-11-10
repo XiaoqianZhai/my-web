@@ -2,8 +2,6 @@ import Link from "next/link";
 import { projects } from "@/lib/projects";
 
 export default function HomePage() {
-  const [greenCity, analyticsShowdown] = projects;
-
   return (
     <section className="space-y-12">
       <div className="space-y-4">
@@ -23,10 +21,7 @@ export default function HomePage() {
           </li>
           <li>Analytics toolkit: Python, R, and Tableau.</li>
           <li>
-            Coursework projects:{" "}
-            {greenCity && analyticsShowdown
-              ? `${greenCity.title} and the ${analyticsShowdown.title}.`
-              : "TODO: add your projects"}
+            Project work: {projects.map((project) => project.title).join(" and ")}.
           </li>
         </ul>
       </div>

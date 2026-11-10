@@ -9,27 +9,29 @@ export type Project = {
 
 export const projects: Project[] = [
   {
-    slug: "greencity-logistics",
-    title: "GreenCity Logistics",
+    slug: "uber-practicum",
+    title: "Uber Ads Finance Practicum",
     summary:
-      "Group project using optimization for warehouse selection, zone assignment, and vehicle fleet sizing with goal programming.",
-    // TODO: add your role in the group (e.g., modeling, data preparation, validation)
-    role: "TODO: describe your role on this project",
-    // TODO: list the tools/software used (e.g., modeling language, solver, spreadsheet)
+      "MSBA practicum with Uber's Ads Finance team: a 4-person team analyzing accounts receivable disputes and the unbilled backlog.",
+    role: "My role focused on automation and machine learning; I built the backlog risk-score model.",
     tools: [],
-    // TODO: add 3-5 bullet points on the approach, what you built, and results once known
-    details: [],
+    details: [
+      "Worked with Uber's Ads Finance team as part of the MSBA practicum.",
+      "Analyzed accounts receivable disputes and the unbilled backlog.",
+      "Focused on automation and machine learning, including the backlog risk-score model.",
+    ],
   },
   {
-    slug: "analytics-showdown-gna",
-    title: "SCU Analytics Showdown",
+    slug: "portfolio-website",
+    title: "Portfolio Website",
     summary:
-      "Analyzed Good Nature Agro farmer-level data in a Jupyter notebook; built yield prediction models and risk segmentation classifiers.",
-    // TODO: add your role on this project
-    role: "TODO: describe your role on this project",
-    tools: ["Jupyter Notebook"],
-    // TODO: add 3-5 bullet points on the approach, what you built, and results once known
-    details: [],
+      "This site itself: a class project for ISBA 2438 built with Next.js (App Router), TypeScript, and Tailwind CSS, developed with the Viber coding agent.",
+    role: "Solo project, developed with the Viber coding agent.",
+    tools: ["Next.js (App Router)", "TypeScript", "Tailwind CSS"],
+    details: [
+      "Dynamic project detail pages rendered from a single shared data file.",
+      "Contact form with server-side validation that saves submissions to a JSON file.",
+    ],
   },
 ];
 
