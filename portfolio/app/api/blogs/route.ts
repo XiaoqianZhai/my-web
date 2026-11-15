@@ -6,6 +6,7 @@ import {
   slugifyTitle,
   validateBlogPost,
 } from "@/lib/blogs";
+import { readJsonObject } from "@/lib/read-json-object";
 
 export async function GET() {
   try {
@@ -24,24 +25,10 @@ export async function GET() {
 }
 
 export async function POST(request: Request) {
-  let body: unknown;
-  try {
-    body = await request.json();
-  } catch {
-    return NextResponse.json(
-      { error: "Request body must be valid JSON." },
-      { status: 400 },
-    );
-  }
+  const parsed = await readJsonObject(request);
+  if (parsed.error) return parsed.error;
 
-  if (typeof body !== "object" || body === null || Array.isArray(body)) {
-    return NextResponse.json(
-      { error: "Request body must be a JSON object." },
-      { status: 400 },
-    );
-  }
-
-  const record = body as Record<string, unknown>;
+  const record = parsed.object;
   const values = {
     title: typeof record.title === "string" ? record.title : "",
     summary: typeof record.summary === "string" ? record.summary : "",

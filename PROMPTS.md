@@ -132,3 +132,45 @@ Note: intro paragraph and education entry on `/about-me` now mention Sichuan Nor
 > I think I accidentally changed something in the code by hand. can you check git status and git diff and tell me what changed? don't fix or revert anything yet.
 
 Note: working tree was clean — no tracked files had changed; only the long-standing untracked Python assignment files were listed.
+
+## Part 2
+
+These prompts were drafted with help from Claude. Each entry below is a message I sent to the Viber coding assistant, in order, copied exactly as I wrote it, with the commit it produced. Commit hashes refer to this repository.
+
+## 18. JSON API for the contact form
+
+> Part 2 of my portfolio assignment, step 1: a JSON API for the contact form. Please read the repo first (the Next.js app is in portfolio/).
+>
+> Context: in Part 1, /contact-me-server-form submits to the server action submitContact in portfolio/app/contact-me-server-form/actions.ts. That action calls validateContactForm and saveContactSubmission from portfolio/lib/contact.ts, which append to data/contact-submissions.json (commits 89ea261 and 4e2bbdc).
+>
+> Change: add a Next.js App Router Route Handler at portfolio/app/api/contact/route.ts that exports POST. It reads a JSON body { name, email, message }, validates with the existing validateContactForm (no second copy of the rules), and saves with the existing saveContactSubmission so the API and the server form write to the same JSON file. Use NextResponse.json with clear status codes: 201 { ok: true } on success, 400 { errors } with per-field messages on validation failure, 400 if the body is not valid JSON or not an object, and 500 { error } if saving fails.
+>
+> Decisions and why: (1) add a source field to every saved entry, "server-form" or "api", and pass "server-form" from the existing server action, so I can tell in the shared file where each submission came from. (2) my handout mentions both /api/contact and /api/contacts, so make portfolio/app/api/contacts/route.ts re-export the same POST handler instead of duplicating code.
+>
+> How to check: run lint and build, start the app, and use curl to POST a valid body (expect 201), blank name, blank message, the emails a@@b.com, a@b and "a b@c.com" (expect 400 with the matching field error), and a broken JSON body (expect 400). Confirm the valid one is appended to data/contact-submissions.json with source "api". Commit only the files you changed (not the Python files at the repo root), don't push yet, and tell me the commit hash and what changed in each file.
+
+Note: added `app/api/contact/route.ts` (shared validation and storage, source tagging) and the `app/api/contacts/route.ts` re-export; the server action now passes `source: "server-form"`. Commit `aefb626`.
+
+## 19. Contact page that posts to the API
+
+> nice. next, make a new /contact-me page that sends the form to /api/contact with fetch (POST, JSON) instead of the server action. put the form in a client component like components/ContactApiForm.tsx and keep the same labels and styles as ContactForm.tsx so both forms look the same. show the field errors when the api returns 400, a success message on 201, and a different error message if the request fails. add the page to the nav, test a valid and some invalid ones, then commit.
+
+Note: added `components/ContactApiForm.tsx` (fetch to `/api/contact`, per-field errors, success and network-error messages), `app/contact-me/page.tsx`, and a nav link; fixed the active-link check so `/contact-me` and `/contact-me-server-form` highlight independently. Commit `c9a4052`.
+
+## 20. Blog storage and API
+
+> did that get committed? if not, commit it first. then the blog part: add lib/blogs.ts (similar to lib/contact.ts) to read and save posts in a json file, and an api route app/api/blogs/route.ts with GET (return all posts, newest first) and POST (title, summary, content are required, make a slug from the title, 400 for missing fields, 409 if the slug already exists, 201 when it's created). save posts in content/blog-posts.json instead of data/ because data/ is gitignored and I want the posts in the repo so the blog pages work after cloning. add 2 short starter posts: one about building this portfolio with an AI coding agent (working in small steps and reviewing the code, like the email whitespace bug we found), and one about why I validate forms on the server. don't make up numbers. test it with curl, remove any test posts, then commit.
+
+Note: added `lib/blogs.ts` (types, slugify, validation, JSON storage with slug-conflict error), `app/api/blogs/route.ts` (GET newest first, POST with 400/409/201), and `content/blog-posts.json` with the two starter posts. Commit `a8261bd`.
+
+## 21. Blog pages and admin form
+
+> great. now the blog pages. /blogs should call GET /api/blogs with fetch and list all posts (title, date, summary) with links to /blogs/[slug]. /blogs/[slug] is a dynamic route like the project pages: show the full post and use notFound() for an unknown slug. /admin/blogs has a form (title, summary, content) that POSTs to /api/blogs with fetch, shows the errors from the api (400 / 409), and shows a link to the new post when it works. also redirect /blog-posts to /blogs since my notes mention that path, and add Blogs to the nav. new posts should show up without rebuilding the app. test it in the app, remove any test posts, then commit and push.
+
+Note: added `components/BlogList.tsx` (client fetch, so new posts appear without a rebuild), `app/blogs/page.tsx`, `app/blogs/[slug]/page.tsx` (`force-dynamic`, `notFound()`) with its `not-found.tsx`, `components/BlogAdminForm.tsx` with `app/admin/blogs/page.tsx`, the `/blog-posts` redirect, and the Blogs nav link. Commit `e50296f`.
+
+## 22. Cleanup refactor, blog post rewording, prompt log
+
+> last cleanup before I submit. some code is repeated: the same inputClasses and label/input/error markup is in ContactForm, ContactApiForm and BlogAdminForm, and both api routes parse the JSON body the same way. pull those into small shared pieces (like components/FormField.tsx and a readJsonObject helper in lib/), and use ContactFormValues from lib/contact.ts instead of a second type in ContactApiForm, so there's one copy of each. don't change how anything works. also the first blog post says "I spotted a bug" and that I read every diff and ran the app myself, which isn't quite accurate. please reword it to say a review step caught the email whitespace bug and each step was tested before it was committed. then lint, build, quickly re-test both contact forms and the blog api, and add this session's prompts to the end of PROMPTS.md under a "Part 2" heading that starts with "These prompts were drafted with help from Claude." (copy them exactly, with the commit for each). commit, push, and tell me the full commit hash.
+
+Note: added `components/FormField.tsx` (shared label/input/textarea/error markup and `inputClasses`) used by all three forms, `lib/read-json-object.ts` (shared JSON body parsing) used by both API routes, and switched `ContactApiForm` to the shared `ContactFormValues`/`ContactFieldErrors` types; reworded the first blog post's summary and content for accuracy. Commit: this commit.

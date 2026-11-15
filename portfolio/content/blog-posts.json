@@ -2,8 +2,8 @@
   {
     "slug": "building-this-portfolio-with-an-ai-coding-agent",
     "title": "Building this portfolio with an AI coding agent",
-    "summary": "What worked for me when pairing with an AI coding agent: small steps, reading every diff, and testing before committing.",
-    "content": "This portfolio is coming together with the help of an AI coding agent, and the part that matters most is not the generating - it is the reviewing. I give the agent one small step at a time, read every diff it produces, and run the app myself before anything gets committed.\n\nWorking in small steps makes mistakes cheap. In one review pass I spotted a bug in the email validation: the whitespace rule had to be fixed so an email with a space in it is rejected, and that fix landed as its own tiny commit instead of hiding inside a big batch of changes. Because each step was small, the bug was easy to see and easy to describe.\n\nThe habit I am trying to build is simple: one commit tells one small story, and I can explain every line in it. If I cannot, that is a sign I need to slow down and read more carefully.",
+    "summary": "What worked for me when pairing with an AI coding agent: small steps, a review pass on each one, and testing before committing.",
+    "content": "This portfolio is coming together with the help of an AI coding agent, and the part that matters most is not the generating - it is the reviewing. I give the agent one small step at a time, and every step is reviewed and tested before it gets committed.\n\nWorking in small steps makes mistakes cheap. A review step caught a bug in the email validation: the whitespace rule had to be fixed so an email with a space in it is rejected, and that fix landed as its own tiny commit instead of hiding inside a big batch of changes. Because each step was small, the bug was easy to see and easy to describe.\n\nThe habit I am trying to build is simple: one commit tells one small story, and I can explain every line in it. If I cannot, that is a sign I need to slow down and read more carefully.",
     "createdAt": "2026-11-14T21:00:00.000Z"
   },
   {

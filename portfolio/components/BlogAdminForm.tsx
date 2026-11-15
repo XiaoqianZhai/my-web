@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useState, type FormEvent } from "react";
+import FormField from "./FormField";
 
 type BlogFormValues = {
   title: string;
@@ -16,9 +17,6 @@ const initialBlogFormValues: BlogFormValues = {
   summary: "",
   content: "",
 };
-
-const inputClasses =
-  "w-full rounded-lg border border-black/15 bg-transparent px-3 py-2 dark:border-white/25";
 
 export default function BlogAdminForm() {
   const [values, setValues] = useState(initialBlogFormValues);
@@ -74,81 +72,33 @@ export default function BlogAdminForm() {
 
   return (
     <form onSubmit={handleSubmit} noValidate className="space-y-5">
-      <div className="space-y-1">
-        <label htmlFor="blog-title" className="block text-sm font-medium">
-          Title
-        </label>
-        <input
-          id="blog-title"
-          name="title"
-          type="text"
-          value={values.title}
-          onChange={(event) => updateValue("title", event.target.value)}
-          aria-invalid={fieldErrors.title ? true : undefined}
-          aria-describedby={fieldErrors.title ? "blog-title-error" : undefined}
-          className={inputClasses}
-        />
-        {fieldErrors.title && (
-          <p
-            id="blog-title-error"
-            className="text-sm text-red-600 dark:text-red-400"
-          >
-            {fieldErrors.title}
-          </p>
-        )}
-      </div>
+      <FormField
+        id="blog-title"
+        label="Title"
+        name="title"
+        value={values.title}
+        onChange={(event) => updateValue("title", event.target.value)}
+        error={fieldErrors.title}
+      />
 
-      <div className="space-y-1">
-        <label htmlFor="blog-summary" className="block text-sm font-medium">
-          Summary
-        </label>
-        <input
-          id="blog-summary"
-          name="summary"
-          type="text"
-          value={values.summary}
-          onChange={(event) => updateValue("summary", event.target.value)}
-          aria-invalid={fieldErrors.summary ? true : undefined}
-          aria-describedby={
-            fieldErrors.summary ? "blog-summary-error" : undefined
-          }
-          className={inputClasses}
-        />
-        {fieldErrors.summary && (
-          <p
-            id="blog-summary-error"
-            className="text-sm text-red-600 dark:text-red-400"
-          >
-            {fieldErrors.summary}
-          </p>
-        )}
-      </div>
+      <FormField
+        id="blog-summary"
+        label="Summary"
+        name="summary"
+        value={values.summary}
+        onChange={(event) => updateValue("summary", event.target.value)}
+        error={fieldErrors.summary}
+      />
 
-      <div className="space-y-1">
-        <label htmlFor="blog-content" className="block text-sm font-medium">
-          Content
-        </label>
-        <textarea
-          id="blog-content"
-          name="content"
-          rows={8}
-          value={values.content}
-          onChange={(event) => updateValue("content", event.target.value)}
-          aria-invalid={fieldErrors.content ? true : undefined}
-          aria-describedby={
-            fieldErrors.content ? "blog-content-error" : undefined
-          }
-          className={inputClasses}
-        />
-        {fieldErrors.content && (
-          <p
-            id="blog-content-error"
-            className="text-sm text-red-600 dark:text-red-400"
-          >
-            {fieldErrors.content}
-          </p>
-        )}
-      </div>
+      <FormField
+        id="blog-content"
+        label="Content"
+        name="content"
+        rows={8}
+        value={values.content}
+        onChange={(event) => updateValue("content", event.target.value)}
+        error={fieldErrors.content}
+      />
 
       {errorMessage && (
         <p

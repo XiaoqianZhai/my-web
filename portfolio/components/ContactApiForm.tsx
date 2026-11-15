@@ -1,32 +1,23 @@
 "use client";
 
 import { useState, type FormEvent } from "react";
+import type { ContactFieldErrors, ContactFormValues } from "@/lib/contact";
+import FormField from "./FormField";
 
-type ContactApiFormValues = {
-  name: string;
-  email: string;
-  message: string;
-};
-
-type ContactApiFieldErrors = Partial<Record<keyof ContactApiFormValues, string>>;
-
-const initialApiFormValues: ContactApiFormValues = {
+const initialApiFormValues: ContactFormValues = {
   name: "",
   email: "",
   message: "",
 };
 
-const inputClasses =
-  "w-full rounded-lg border border-black/15 bg-transparent px-3 py-2 dark:border-white/25";
-
 export default function ContactApiForm() {
-  const [values, setValues] = useState(initialApiFormValues);
-  const [fieldErrors, setFieldErrors] = useState<ContactApiFieldErrors>({});
+  const [values, setValues] = useState<ContactFormValues>(initialApiFormValues);
+  const [fieldErrors, setFieldErrors] = useState<ContactFieldErrors>({});
   const [successMessage, setSuccessMessage] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
   const [pending, setPending] = useState(false);
 
-  function updateValue(field: keyof ContactApiFormValues, value: string) {
+  function updateValue(field: keyof ContactFormValues, value: string) {
     setValues((prev) => ({ ...prev, [field]: value }));
   }
 
@@ -72,79 +63,34 @@ export default function ContactApiForm() {
 
   return (
     <form onSubmit={handleSubmit} noValidate className="space-y-5">
-      <div className="space-y-1">
-        <label htmlFor="api-name" className="block text-sm font-medium">
-          Name
-        </label>
-        <input
-          id="api-name"
-          name="name"
-          type="text"
-          value={values.name}
-          onChange={(event) => updateValue("name", event.target.value)}
-          aria-invalid={fieldErrors.name ? true : undefined}
-          aria-describedby={fieldErrors.name ? "api-name-error" : undefined}
-          className={inputClasses}
-        />
-        {fieldErrors.name && (
-          <p
-            id="api-name-error"
-            className="text-sm text-red-600 dark:text-red-400"
-          >
-            {fieldErrors.name}
-          </p>
-        )}
-      </div>
+      <FormField
+        id="api-name"
+        label="Name"
+        name="name"
+        value={values.name}
+        onChange={(event) => updateValue("name", event.target.value)}
+        error={fieldErrors.name}
+      />
 
-      <div className="space-y-1">
-        <label htmlFor="api-email" className="block text-sm font-medium">
-          Email
-        </label>
-        <input
-          id="api-email"
-          name="email"
-          type="email"
-          value={values.email}
-          onChange={(event) => updateValue("email", event.target.value)}
-          aria-invalid={fieldErrors.email ? true : undefined}
-          aria-describedby={fieldErrors.email ? "api-email-error" : undefined}
-          className={inputClasses}
-        />
-        {fieldErrors.email && (
-          <p
-            id="api-email-error"
-            className="text-sm text-red-600 dark:text-red-400"
-          >
-            {fieldErrors.email}
-          </p>
-        )}
-      </div>
+      <FormField
+        id="api-email"
+        label="Email"
+        name="email"
+        type="email"
+        value={values.email}
+        onChange={(event) => updateValue("email", event.target.value)}
+        error={fieldErrors.email}
+      />
 
-      <div className="space-y-1">
-        <label htmlFor="api-message" className="block text-sm font-medium">
-          Message
-        </label>
-        <textarea
-          id="api-message"
-          name="message"
-          rows={5}
-          value={values.message}
-          onChange={(event) => updateValue("message", event.target.value)}
-          aria-invalid={fieldErrors.message ? true : undefined}
-          aria-describedby={
-            fieldErrors.message ? "api-message-error" : undefined
-          }
-          className={inputClasses}
-        />
-        {fieldErrors.message && (
-          <p
-            id="api-message-error"
-            className="text-sm text-red-600 dark:text-red-400"
-          >
-            {fieldErrors.message}
-          </p>
-        )}
-      </div>
+      <FormField
+        id="api-message"
+        label="Message"
+        name="message"
+        rows={5}
+        value={values.message}
+        onChange={(event) => updateValue("message", event.target.value)}
+        error={fieldErrors.message}
+      />
 
       {successMessage && (
         <p
