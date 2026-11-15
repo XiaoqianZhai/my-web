@@ -2,6 +2,8 @@
 
 Prompt log for Assignment 2 (portfolio website), Viber session. Some prompts were drafted with help from Claude.
 
+Only the major prompts that built the assignment are listed; setup, git/SSH and other housekeeping messages are left out.
+
 Each entry below is a message I sent to the Viber coding assistant, in order, copied exactly as I wrote it, with a short note on what it produced. Commit hashes refer to this repository.
 
 ## 1. Initial request: set up layout and static pages
@@ -33,111 +35,41 @@ Each entry below is a message I sent to the Viber coding assistant, in order, co
 
 Note: scaffolded the Next.js app in `portfolio/` (TypeScript, Tailwind, App Router) and built the shared layout with `SiteNav`, the landing page, about page, and projects list with `ProjectCard`, using `lib/projects.ts` as the single data source.
 
-## 2. Answer to question: where should the app live?
-
-> The Next.js app is in the `portfolio/` folder.
-> cd portfolio
-> npm install
-> npm run dev
-
-Note: chose a `portfolio/` subfolder so the app stays separate from the Python assignment files at the repo root.
-
-## 3. First commit and push attempt
-
-> git add .git commit -m "Add portfolio layout, nav, landing, about-me, projects pages"
-> git push
-
-Note: repo had no commits and no remote yet, so I was asked how to scope the commit and where to push (see next two answers). Result after answers: commit `cc32318` (portfolio files only); the push failed on GitHub authentication over HTTPS.
-
-## 4. Answer to question: commit scope
-
-> Only portfolio/ (Recommended)
-
-Note: only `portfolio/` files went into the commit; the Python assignment files stayed untracked.
-
-## 5. Answer to question: push target
-
-> Remote URL: https://github.com/XiaoqianZhai/my-web.git — Commit only the portfolio/ folder (leave the Python files untracked), then add this as the origin remote and push. The GitHub repo already has one "Initial commit" containing only an auto-generated README.md with the line "# my-web", so a normal push will be rejected. It's safe to overwrite it: push with git push -u origin HEAD:main --force. If the push fails because of GitHub authentication, tell me exactly what I need to do and stop.
-
-Note: commit `cc32318` created; remote `origin` added; push failed because no GitHub credentials were configured — stopped and gave SSH setup steps.
-
-## 6. Project detail pages
+## 2. Project detail pages
 
 > Next step: add the dynamic project detail page at /projects/[slug].- Use the existing getProjectBySlug helper in lib/projects.ts. Don't duplicate the lookup logic in the page.- "greencity-logistics" and "analytics-showdown-gna" must each show their own title, summary, role, tools, and details- For an unknown slug (e.g. /projects/does-not-exist), call notFound() and add a not-found page for this route that says the project wasn't found and links back to /projects- Use generateStaticParams for the known slugs- Use the params API that matches the installed Next.js version (16)Run lint and build, then check that both valid slugs return 200 with different content and the unknown slug returns 404 with the not-found message. Commit with a clear message (don't push; the push is blocked until I set up GitHub auth). Tell me which files changed.
 
 Note: added `app/projects/[slug]/page.tsx` (Next 16 Promise-based params, `generateStaticParams`, per-project metadata) and a scoped `app/projects/[slug]/not-found.tsx`. Disabled `cacheComponents` in `next.config.ts` so unknown slugs return a real 404 instead of a streamed soft 404. Commit `fa9bf8b`.
 
-## 7. Contact form with server action
+## 3. Contact form with server action
 
 > ok now the contact form at /contact-me-server-form. use a server action for now (no api route yet). fields: name, email, message, each with a label. save every submission into data/contact-submissions.json (add to the list, create the file if it's missing). validation has to happen on the server: name and message can't be blank after trimming. email: no spaces, exactly one @, something before the @, and the part after @ needs a dot with no empty parts (so a@b, a@.com, a@b..com should fail). show the errors next to the fields, a clear success message when it works, and a different message if something breaks on the server. put the validation and the saving in lib/ so I can reuse them for /api/contact in part 2. turn off browser validation (noValidate) so I can show the server errors in my demo. test one valid case and the bad cases, then commit (don't push). also explain the flow from clicking submit to the json file in simple words so I understand it for my video. thanks!
 
 Note: added `lib/contact.ts` (reusable validation + JSON storage), `app/contact-me-server-form/actions.ts` (server action), `app/contact-me-server-form/page.tsx`, and `components/ContactForm.tsx` (`useActionState`, `noValidate`, per-field errors, success/server-error messages). Tested valid and bad cases end-to-end. Commit `89ea261`.
 
-## 8. Full pre-submission check, email whitespace rule, README
+## 4. Full pre-submission check, email whitespace rule, README
 
 > nice. can you double check everything against the assignment before I submit? 4 pages with real content + nav links work, /projects/[slug] works for both slugs and the unknown one, and the contact form server validation. one question: does the email get trimmed before checking? the rule says no whitespace, so " a@b.com" should fail too I think. if it's trimmed, fix that. also replace portfolio/README.md with short instructions on how to run it. then give me a small table of test inputs and what should happen so I can test them myself in the browser: valid one, name = only spaces, message = only spaces, ab.com, a@@b.com, @b.com, a@b, a@.com, a@b..com, a b@c.com. commit (don't push).
 
 Note: confirmed the email was trimmed first and fixed it so any whitespace fails; rewrote `portfolio/README.md` with run instructions; re-ran the full check suite. Commit `4e2bbdc`.
 
-## 9. Copy SSH public key to clipboard, start dev server
-
-> copy my ssh public key (~/.ssh/id_ed25519.pub) to the clipboard with pbcopy, don't print it. then start the dev server for portfolio in the background on port 3000 and leave it running so I can open it in the browser.
-
-Note: copied the key with `pbcopy` and started `npm run dev` in the background on port 3000.
-
-## 10. Clipboard trouble, copy again
-
-> github said the key is invalid, I think my clipboard got overwritten. copy the public key to the clipboard again please
-
-Note: re-copied the key and verified the clipboard matches the file byte for byte.
-
-## 11. Show the public key
-
-> i'm confused about what to paste. show me the public key itself in a code block (it's the public one so it's fine) and copy it to the clipboard again
-
-Note: displayed the public key and re-copied it; explained GitHub rejects duplicate keys if it is already attached to another account.
-
-## 12. Fingerprint check
-
-> what's the SHA256 fingerprint of ~/.ssh/id_ed25519.pub? (ssh-keygen -lf) I want to double check it on github
-
-Note: ran `ssh-keygen -lf` and reported the fingerprint.
-
-## 13. Switch remote to SSH and push
-
-> ok the key is added on github (fingerprint matches). now switch the remote to ssh and push, same as before: git push -u origin HEAD:main --force. accept github's host key if it asks
-
-Note: remote switched to `git@github.com:XiaoqianZhai/my-web.git`, host key accepted, and all commits up to `4e2bbdc` pushed (force-pushed over the initial commit).
-
-## 14. Replace project content (Uber practicum + portfolio site)
+## 5. Replace project content (Uber practicum + portfolio site)
 
 > I need to fix the content: I didn't actually do the greencity and GNA projects, so replace both. project 1, slug "uber-practicum": MSBA practicum with Uber's Ads Finance team (4-person team), we analyzed accounts receivable disputes and the unbilled backlog; my role was automation and machine learning, I built the backlog risk-score model. keep it high level, no numbers or internal data since it's a company project, and don't make up tools or results. project 2, slug "portfolio-website": this portfolio site itself, built for ISBA 2438 with Next.js (App Router, TypeScript, Tailwind) using the Viber coding agent: dynamic project pages and a contact form with server-side validation that saves to a JSON file. also fix the home page highlight that still mentions the old projects. on the about page remove the TODO lines for graduation year and undergrad school, just keep MSBA candidate at Santa Clara University and undergrad background in Cultural Industry Management. make sure no TODO text shows on any page. run lint and build, check both new slugs work and the old slugs now 404, then commit and push.
 
 Note: replaced both projects in `lib/projects.ts`, made the home-page highlight derive project titles from the data, removed the education TODO lines, updated the README slug list. Old slugs now 404. Commit `f73319b`.
 
-## 15. Open files in VS Code for the demo video
-
-> open the portfolio folder in VS Code (open -a "Visual Studio Code") with these files open so I can show them in my video: components/ContactForm.tsx, app/contact-me-server-form/actions.ts, lib/contact.ts. don't change any code.
-
-Note: opened the folder in VS Code with those three files as tabs; no code changed.
-
-## 16. About page education line
+## 6. About page education line
 
 > on the about page, change the undergrad line to "Bachelor's in Cultural Industry Management, Sichuan Normal University" and mention Sichuan Normal University in the intro paragraph too. don't add years or other details. check the page, then commit and push.
 
 Note: intro paragraph and education entry on `/about-me` now mention Sichuan Normal University. Commit `d412138`.
 
-## 17. Check for accidental hand edits
-
-> I think I accidentally changed something in the code by hand. can you check git status and git diff and tell me what changed? don't fix or revert anything yet.
-
-Note: working tree was clean — no tracked files had changed; only the long-standing untracked Python assignment files were listed.
-
 ## Part 2
 
 These prompts were drafted with help from Claude. Each entry below is a message I sent to the Viber coding assistant, in order, copied exactly as I wrote it, with the commit it produced. Commit hashes refer to this repository.
 
-## 18. JSON API for the contact form
+## 7. JSON API for the contact form
 
 > Part 2 of my portfolio assignment, step 1: a JSON API for the contact form. Please read the repo first (the Next.js app is in portfolio/).
 >
@@ -151,25 +83,25 @@ These prompts were drafted with help from Claude. Each entry below is a message 
 
 Note: added `app/api/contact/route.ts` (shared validation and storage, source tagging) and the `app/api/contacts/route.ts` re-export; the server action now passes `source: "server-form"`. Commit `aefb626`.
 
-## 19. Contact page that posts to the API
+## 8. Contact page that posts to the API
 
 > nice. next, make a new /contact-me page that sends the form to /api/contact with fetch (POST, JSON) instead of the server action. put the form in a client component like components/ContactApiForm.tsx and keep the same labels and styles as ContactForm.tsx so both forms look the same. show the field errors when the api returns 400, a success message on 201, and a different error message if the request fails. add the page to the nav, test a valid and some invalid ones, then commit.
 
 Note: added `components/ContactApiForm.tsx` (fetch to `/api/contact`, per-field errors, success and network-error messages), `app/contact-me/page.tsx`, and a nav link; fixed the active-link check so `/contact-me` and `/contact-me-server-form` highlight independently. Commit `c9a4052`.
 
-## 20. Blog storage and API
+## 9. Blog storage and API
 
 > did that get committed? if not, commit it first. then the blog part: add lib/blogs.ts (similar to lib/contact.ts) to read and save posts in a json file, and an api route app/api/blogs/route.ts with GET (return all posts, newest first) and POST (title, summary, content are required, make a slug from the title, 400 for missing fields, 409 if the slug already exists, 201 when it's created). save posts in content/blog-posts.json instead of data/ because data/ is gitignored and I want the posts in the repo so the blog pages work after cloning. add 2 short starter posts: one about building this portfolio with an AI coding agent (working in small steps and reviewing the code, like the email whitespace bug we found), and one about why I validate forms on the server. don't make up numbers. test it with curl, remove any test posts, then commit.
 
 Note: added `lib/blogs.ts` (types, slugify, validation, JSON storage with slug-conflict error), `app/api/blogs/route.ts` (GET newest first, POST with 400/409/201), and `content/blog-posts.json` with the two starter posts. Commit `a8261bd`.
 
-## 21. Blog pages and admin form
+## 10. Blog pages and admin form
 
 > great. now the blog pages. /blogs should call GET /api/blogs with fetch and list all posts (title, date, summary) with links to /blogs/[slug]. /blogs/[slug] is a dynamic route like the project pages: show the full post and use notFound() for an unknown slug. /admin/blogs has a form (title, summary, content) that POSTs to /api/blogs with fetch, shows the errors from the api (400 / 409), and shows a link to the new post when it works. also redirect /blog-posts to /blogs since my notes mention that path, and add Blogs to the nav. new posts should show up without rebuilding the app. test it in the app, remove any test posts, then commit and push.
 
 Note: added `components/BlogList.tsx` (client fetch, so new posts appear without a rebuild), `app/blogs/page.tsx`, `app/blogs/[slug]/page.tsx` (`force-dynamic`, `notFound()`) with its `not-found.tsx`, `components/BlogAdminForm.tsx` with `app/admin/blogs/page.tsx`, the `/blog-posts` redirect, and the Blogs nav link. Commit `e50296f`.
 
-## 22. Cleanup refactor, blog post rewording, prompt log
+## 11. Cleanup refactor, blog post rewording, prompt log
 
 > last cleanup before I submit. some code is repeated: the same inputClasses and label/input/error markup is in ContactForm, ContactApiForm and BlogAdminForm, and both api routes parse the JSON body the same way. pull those into small shared pieces (like components/FormField.tsx and a readJsonObject helper in lib/), and use ContactFormValues from lib/contact.ts instead of a second type in ContactApiForm, so there's one copy of each. don't change how anything works. also the first blog post says "I spotted a bug" and that I read every diff and ran the app myself, which isn't quite accurate. please reword it to say a review step caught the email whitespace bug and each step was tested before it was committed. then lint, build, quickly re-test both contact forms and the blog api, and add this session's prompts to the end of PROMPTS.md under a "Part 2" heading that starts with "These prompts were drafted with help from Claude." (copy them exactly, with the commit for each). commit, push, and tell me the full commit hash.
 
