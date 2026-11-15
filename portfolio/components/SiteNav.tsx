@@ -7,6 +7,7 @@ const links = [
   { href: "/", label: "Home" },
   { href: "/about-me", label: "About Me" },
   { href: "/projects", label: "Projects" },
+  { href: "/contact-me", label: "Contact (API)" },
   { href: "/contact-me-server-form", label: "Contact" },
 ];
 
@@ -17,7 +18,7 @@ export default function SiteNav() {
     <nav className="flex flex-wrap gap-x-6 gap-y-2">
       {links.map(({ href, label }) => {
         const active =
-          href === "/" ? pathname === "/" : pathname.startsWith(href);
+          pathname === href || pathname.startsWith(`${href}/`);
         return (
           <Link
             key={href}
