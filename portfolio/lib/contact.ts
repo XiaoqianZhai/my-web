@@ -9,8 +9,11 @@ export type ContactFormValues = {
 
 export type ContactFieldErrors = Partial<Record<keyof ContactFormValues, string>>;
 
+export type ContactSubmissionSource = "server-form" | "api";
+
 export type ContactSubmission = ContactFormValues & {
   submittedAt: string;
+  source: ContactSubmissionSource;
 };
 
 export function validateContactForm(

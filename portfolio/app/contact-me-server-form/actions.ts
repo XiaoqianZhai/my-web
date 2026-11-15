@@ -33,6 +33,7 @@ export async function submitContact(
       email: values.email.trim(),
       message: values.message.trim(),
       submittedAt: new Date().toISOString(),
+      source: "server-form",
     });
   } catch (error) {
     console.error("Failed to save contact submission:", error);
