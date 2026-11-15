@@ -174,3 +174,11 @@ Note: added `components/BlogList.tsx` (client fetch, so new posts appear without
 > last cleanup before I submit. some code is repeated: the same inputClasses and label/input/error markup is in ContactForm, ContactApiForm and BlogAdminForm, and both api routes parse the JSON body the same way. pull those into small shared pieces (like components/FormField.tsx and a readJsonObject helper in lib/), and use ContactFormValues from lib/contact.ts instead of a second type in ContactApiForm, so there's one copy of each. don't change how anything works. also the first blog post says "I spotted a bug" and that I read every diff and ran the app myself, which isn't quite accurate. please reword it to say a review step caught the email whitespace bug and each step was tested before it was committed. then lint, build, quickly re-test both contact forms and the blog api, and add this session's prompts to the end of PROMPTS.md under a "Part 2" heading that starts with "These prompts were drafted with help from Claude." (copy them exactly, with the commit for each). commit, push, and tell me the full commit hash.
 
 Note: added `components/FormField.tsx` (shared label/input/textarea/error markup and `inputClasses`) used by all three forms, `lib/read-json-object.ts` (shared JSON body parsing) used by both API routes, and switched `ContactApiForm` to the shared `ContactFormValues`/`ContactFieldErrors` types; reworded the first blog post's summary and content for accuracy. Commit: this commit.
+
+## Part 2 critique
+
+1. lib/blog-format.ts (commit e50296f)
+The agent first imported a date helper from lib/blogs.ts into a browser component, and the build failed because that file reads files on the server. Its fix, moving the helper into lib/blog-format.ts, was accepted so server code stays on the server. Checked with npm run build and by opening /blogs: the build passed and both posts showed with dates.
+
+2. content/blog-posts.json (commit 03298d3)
+The agent's first blog post said "I spotted a bug" and that I read every diff myself, which wasn't accurate. The wording was changed to say a review step caught the email bug and each step was tested before committing. Checked by opening the post on /blogs: it now shows the corrected wording.
