@@ -4,7 +4,7 @@ Prompt log for Assignment 2 (portfolio website), Viber session. Some prompts wer
 
 Only the major prompts that built the assignment are listed; setup, git/SSH and other housekeeping messages are left out.
 
-Each entry below is a message I sent to the Viber coding assistant, in order, copied exactly as I wrote it, with a short note on what it produced. Commit hashes refer to this repository.
+Each entry below is a message I sent to the Viber coding assistant, in order, copied exactly as sent, with a short note on what it produced. Commit hashes refer to this repository.
 
 ## 1. Initial request: set up layout and static pages
 
@@ -67,7 +67,7 @@ Note: intro paragraph and education entry on `/about-me` now mention Sichuan Nor
 
 ## Part 2
 
-These prompts were drafted with help from Claude. Each entry below is a message I sent to the Viber coding assistant, in order, copied exactly as I wrote it, with the commit it produced. Commit hashes refer to this repository.
+These prompts were drafted with help from Claude. Each entry below is a message I sent to the Viber coding assistant, in order, copied exactly as sent, with the commit it produced. Commit hashes refer to this repository.
 
 ## 7. JSON API for the contact form
 
@@ -117,7 +117,7 @@ The agent's first blog post said "I spotted a bug" and that I read every diff my
 
 ## Midterm
 
-These prompts were drafted with help from Claude. Each entry below is a message I sent to the Viber coding assistant, in order, copied exactly as I wrote it, with the commit it produced. Commit hashes refer to this repository.
+These prompts were drafted with help from Claude. Each entry below is a message I sent to the Viber coding assistant, in order, copied exactly as sent, with the commit it produced. Commit hashes refer to this repository.
 
 ## 12. Full CRUD for projects
 
