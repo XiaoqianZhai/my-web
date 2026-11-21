@@ -116,8 +116,7 @@ The agent first imported a date helper from lib/blogs.ts into a browser componen
 The agent's first blog post said "I spotted a bug" and that I read every diff myself, which wasn't accurate. The wording was changed to say a review step caught the email bug and each step was tested before committing. Checked by opening the post on /blogs: it now shows the corrected wording.
 
 ## Midterm
-
-These prompts were drafted with help from Claude. Each entry below is a message I sent to the Viber coding assistant, in order, copied exactly as sent, with the commit it produced. Commit hashes refer to this repository. Housekeeping lines inside the prompts (git restores and commit requests) are cut and marked with [...].
+Each entry below is a message I sent to the Viber coding assistant, in order, copied exactly as sent, with the commit it produced. Commit hashes refer to this repository. Housekeeping lines inside the prompts (git restores and commit requests) are cut and marked with [...].
 
 ## 12. Full CRUD for projects
 
