@@ -7,7 +7,7 @@ type FormFieldProps = {
   id: string;
   label: string;
   name: string;
-  type?: "text" | "email";
+  type?: "text" | "email" | "date";
   rows?: number;
   value?: string;
   defaultValue?: string;
