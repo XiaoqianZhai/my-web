@@ -1,12 +1,16 @@
 import type { Metadata } from "next";
 import ProjectCard from "@/components/ProjectCard";
-import { projects } from "@/lib/projects";
+import { getProjects } from "@/lib/projects";
+
+export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
   title: "Projects",
 };
 
-export default function ProjectsPage() {
+export default async function ProjectsPage() {
+  const projects = await getProjects();
+
   return (
     <section className="space-y-8">
       <div className="space-y-2">

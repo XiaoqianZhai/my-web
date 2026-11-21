@@ -1,7 +1,11 @@
 import Link from "next/link";
-import { projects } from "@/lib/projects";
+import { getProjects } from "@/lib/projects";
 
-export default function HomePage() {
+export const dynamic = "force-dynamic";
+
+export default async function HomePage() {
+  const projects = await getProjects();
+
   return (
     <section className="space-y-12">
       <div className="space-y-4">
