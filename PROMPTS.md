@@ -113,4 +113,70 @@ Note: added `components/FormField.tsx` (shared label/input/textarea/error markup
 The agent first imported a date helper from lib/blogs.ts into a browser component, and the build failed because that file reads files on the server. Its fix, moving the helper into lib/blog-format.ts, was accepted so server code stays on the server. Checked with npm run build and by opening /blogs: the build passed and both posts showed with dates.
 
 2. content/blog-posts.json (commit 03298d3)
-The agent's first blog post said "I spotted a bug" and that I read every diff myself, which wasn't accurate. The wording was changed to say a review step caught the email bug and each step was tested before committing. Checked by opening the post on /blogs: it now shows the corrected wording.
+The agent's first blog post said "I spotted a bug" and that I read every diff myself, which wasn't accurate. The wording was changed to say a review step caught the email bug and each step was tested before committing.
+
+## Midterm
+
+These prompts were drafted with help from Claude. Each entry below is a message I sent to the Viber coding assistant, in order, copied exactly as I wrote it, with the commit it produced. Commit hashes refer to this repository.
+
+## 12. Full CRUD for projects
+
+> The blog-posts.json changes are just test posts from my Part 2 video, please git restore that file. Don't touch the untracked files at the repo root.
+>
+> Then for the midterm I need full CRUD for projects. Right now projects are hard coded in lib/projects.ts. Please:
+> - move the project data into content/projects.json (same fields)
+> - add API routes: GET and POST /api/projects, and GET, PUT, DELETE /api/projects/[slug]. POST should return 201. Validate the fields like we did for blogs
+> - make /projects and /projects/[slug] read from the JSON so new projects show up (unknown slug should still show not found)
+> - add an /admin/projects page where I can create, edit and delete projects through the API
+> - add a console.log in each API handler (method, path, status) so I can show server logs in my video
+> Keep it simple and reuse FormField and ProjectCard.
+
+Note: moved the project data to `content/projects.json` and rewrote `lib/projects.ts` with fs-backed storage, `validateProject`, and a slug-conflict error; added `app/api/projects/route.ts` (GET/POST) and `app/api/projects/[slug]/route.ts` (GET/PUT/DELETE, Next 16 `RouteContext`) with a method/path/status `console.log` on every response; switched the projects pages and home page to read the JSON (`force-dynamic`); added `app/admin/projects/page.tsx` with `components/ProjectAdminForm.tsx` (create/edit/delete, reusing `FormField` and `ProjectCard`). Commit `d307533`.
+
+## 13. Blogs and contacts CRUD, /admin hub
+
+> Nice, that works. Please commit the projects changes first (only files in portfolio, not the untracked stuff at the root).
+>
+> Next do the same CRUD for blogs and contact submissions:
+> - blogs: add GET, PUT, DELETE /api/blogs/[slug]. On /admin/blogs show the list of posts with edit and delete buttons
+> - contacts: give each submission an id (old ones without an id should still work). Add GET /api/contact to list them and GET, PUT, DELETE /api/contact/[id]. Make a new /admin/contacts page where I can see all submissions, add one, edit and delete. Keep using the same JSON file as the server form
+> - same console.log in every handler
+> - add an Admin link in the nav that goes to a simple /admin page with links to the admin pages
+> Then run the build and commit.
+
+Note: added `app/api/blogs/[slug]/route.ts` (GET/PUT/DELETE) and gave `BlogAdminForm` the post list with edit and delete; contact submissions now get a `randomUUID` id and old records without one are backfilled and saved on first read; added GET to `app/api/contact/route.ts`, `app/api/contact/[id]/route.ts` (GET/PUT/DELETE), and `components/ContactAdminForm.tsx` with `app/admin/contacts/page.tsx`; added `app/admin/page.tsx` and the Admin nav link; added the method/path/status log to the existing blog handlers. Commit `ac696f9`.
+
+## 14. Courses page with CRUD API and CourseCard
+
+> Great. Commit that if you haven't yet.
+>
+> Now my custom feature: a Courses page that shows the MSBA courses I've taken.
+> - store courses in content/courses.json (id, code, name, term, notes on what I learned)
+> - add GET and POST /api/courses and GET, PUT, DELETE /api/courses/[id], POST returns 201, same validation style and console.log as the others
+> - make a /courses page where the parent component fetches from /api/courses and passes each course down to a CourseCard component as props
+> - on the same page I should be able to add, edit and delete courses
+> - add Courses to the nav and to the /admin page
+> - put one starter course in the JSON: ISBA 2438 AI Assisted Software Development, Fall 2026, notes: building a Next.js portfolio with the Viber coding agent. I'll add the rest myself
+> Then build and commit.
+
+Note: added `content/courses.json` (seeded with ISBA 2438), `lib/courses.ts`, `app/api/courses/route.ts` (GET/POST) and `app/api/courses/[id]/route.ts` (GET/PUT/DELETE); `components/CoursesManager.tsx` is the parent component that fetches `/api/courses` and passes each course to `components/CourseCard.tsx` as props, with the add/edit/delete form on the same `/courses` page; Courses added to the nav and `/admin`. Commit `e6c5a4d`.
+
+## 15. localStorage study to-do list
+
+> Last feature: a study to-do list that uses browser localStorage (no API for this one).
+> - new /todo page with a TodoList component
+> - I can add a task with a title, a due date and a priority (low / medium / high), check it off, delete it, and clear all
+> - every change saves the list to localStorage with JSON.stringify under one key like "study-todos"
+> - on page load read it back with JSON.parse so the tasks are still there after refresh
+> - if there is nothing saved show "No tasks yet". If the saved data is broken (not valid JSON or not an array) don't crash, just start with an empty list and show a small message
+> - add To-Do to the nav
+> Then build and commit.
+
+Note: added `app/todo/page.tsx` and `components/TodoList.tsx` (add with title, due date, priority; check off; delete; clear all; one `persist` helper saves with `JSON.stringify` under `study-todos` and the load reads back with `JSON.parse`; broken saved data starts an empty list with a message instead of crashing). `FormField` now also accepts `type="date"`. Commit `34af066`.
+
+## 16. Midterm prompt log
+
+> Thanks! Last step: add a "Midterm" section to PROMPTS.md at the repo root with the main prompts I sent in this chat (skip the git status one and the "continue" one), with the line "These prompts were drafted with help from Claude." like in Part 2. Only add PROMPTS.md, not the other untracked files at the root. Then commit, git push, and tell me the full commit SHA.
+
+Note: added this Midterm section. Commit: this commit.
+ Checked by opening the post on /blogs: it now shows the corrected wording.
