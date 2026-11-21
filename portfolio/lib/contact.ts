@@ -1,4 +1,5 @@
 import { mkdir, readFile, rename, writeFile } from "node:fs/promises";
+import { randomUUID } from "node:crypto";
 import path from "node:path";
 
 export type ContactFormValues = {
@@ -12,6 +13,7 @@ export type ContactFieldErrors = Partial<Record<keyof ContactFormValues, string>
 export type ContactSubmissionSource = "server-form" | "api";
 
 export type ContactSubmission = ContactFormValues & {
+  id: string;
   submittedAt: string;
   source: ContactSubmissionSource;
 };
@@ -50,26 +52,89 @@ export function validateContactForm(
   return errors;
 }
 
-export async function saveContactSubmission(
-  submission: ContactSubmission,
-): Promise<void> {
-  const filePath = path.join(process.cwd(), "data", "contact-submissions.json");
+export async function getContactSubmissions(): Promise<ContactSubmission[]> {
+  return readSubmissionsFile();
+}
 
-  let submissions: ContactSubmission[] = [];
+export async function getContactSubmissionById(
+  id: string,
+): Promise<ContactSubmission | undefined> {
+  const submissions = await readSubmissionsFile();
+  return submissions.find((submission) => submission.id === id);
+}
+
+export async function saveContactSubmission(
+  submission: Omit<ContactSubmission, "id">,
+): Promise<void> {
+  const submissions = await readSubmissionsFile();
+  submissions.push({ id: randomUUID(), ...submission });
+  await writeSubmissionsFile(submissions);
+}
+
+export async function updateContactSubmission(
+  id: string,
+  updates: ContactFormValues,
+): Promise<ContactSubmission | undefined> {
+  const submissions = await readSubmissionsFile();
+  const index = submissions.findIndex((submission) => submission.id === id);
+  if (index === -1) {
+    return undefined;
+  }
+
+  const updated: ContactSubmission = { ...submissions[index], ...updates };
+  submissions[index] = updated;
+  await writeSubmissionsFile(submissions);
+  return updated;
+}
+
+export async function deleteContactSubmission(id: string): Promise<boolean> {
+  const submissions = await readSubmissionsFile();
+  const remaining = submissions.filter((submission) => submission.id !== id);
+  if (remaining.length === submissions.length) {
+    return false;
+  }
+
+  await writeSubmissionsFile(remaining);
+  return true;
+}
+
+function getFilePath(): string {
+  return path.join(process.cwd(), "data", "contact-submissions.json");
+}
+
+async function readSubmissionsFile(): Promise<ContactSubmission[]> {
+  const filePath = getFilePath();
+
   try {
     const parsed = JSON.parse(await readFile(filePath, "utf8"));
     if (!Array.isArray(parsed)) {
       throw new Error("contact-submissions.json does not contain a JSON array");
     }
-    submissions = parsed;
+
+    let addedIds = false;
+    const submissions: ContactSubmission[] = parsed.map((submission) => {
+      if (submission.id) {
+        return submission;
+      }
+      addedIds = true;
+      return { ...submission, id: randomUUID() };
+    });
+
+    if (addedIds) {
+      await writeSubmissionsFile(submissions);
+    }
+
+    return submissions;
   } catch (error) {
     if ((error as NodeJS.ErrnoException).code !== "ENOENT") {
       throw error;
     }
+    return [];
   }
+}
 
-  submissions.push(submission);
-
+async function writeSubmissionsFile(submissions: ContactSubmission[]): Promise<void> {
+  const filePath = getFilePath();
   await mkdir(path.dirname(filePath), { recursive: true });
   const tempPath = `${filePath}.tmp`;
   await writeFile(tempPath, JSON.stringify(submissions, null, 2) + "\n", "utf8");

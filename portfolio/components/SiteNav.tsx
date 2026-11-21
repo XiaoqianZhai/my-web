@@ -10,6 +10,7 @@ const links = [
   { href: "/blogs", label: "Blogs" },
   { href: "/contact-me", label: "Contact (API)" },
   { href: "/contact-me-server-form", label: "Contact" },
+  { href: "/admin", label: "Admin" },
 ];
 
 export default function SiteNav() {

@@ -11,8 +11,8 @@ export default function BlogAdminPage() {
       <div className="space-y-2">
         <h1 className="text-3xl font-bold tracking-tight">Blog admin</h1>
         <p className="text-foreground/80">
-          Write a new blog post. It is saved through the JSON API and shows up
-          on the blogs page right away.
+          Create, edit, and delete blog posts. Everything goes through the JSON
+          API and shows up on the blogs page right away.
         </p>
       </div>
       <BlogAdminForm />
