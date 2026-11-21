@@ -162,7 +162,7 @@ Note: added `content/courses.json` (seeded with ISBA 2438), `lib/courses.ts`, `a
 
 ## 15. localStorage study to-do list
 
-> Last feature: a study to-do list that uses browser localStorage (no API for this one).
+> Last feature: a study to-do list that uses browser localStorage (no API for this one)
 > - new /todo page with a TodoList component
 > - I can add a task with a title, a due date and a priority (low / medium / high), check it off, delete it, and clear all
 > - every change saves the list to localStorage with JSON.stringify under one key like "study-todos"
