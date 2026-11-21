@@ -113,15 +113,15 @@ Note: added `components/FormField.tsx` (shared label/input/textarea/error markup
 The agent first imported a date helper from lib/blogs.ts into a browser component, and the build failed because that file reads files on the server. Its fix, moving the helper into lib/blog-format.ts, was accepted so server code stays on the server. Checked with npm run build and by opening /blogs: the build passed and both posts showed with dates.
 
 2. content/blog-posts.json (commit 03298d3)
-The agent's first blog post said "I spotted a bug" and that I read every diff myself, which wasn't accurate. The wording was changed to say a review step caught the email bug and each step was tested before committing.
+The agent's first blog post said "I spotted a bug" and that I read every diff myself, which wasn't accurate. The wording was changed to say a review step caught the email bug and each step was tested before committing. Checked by opening the post on /blogs: it now shows the corrected wording.
 
 ## Midterm
 
-These prompts were drafted with help from Claude. Each entry below is a message I sent to the Viber coding assistant, in order, copied exactly as sent, with the commit it produced. Commit hashes refer to this repository.
+These prompts were drafted with help from Claude. Each entry below is a message I sent to the Viber coding assistant, in order, copied exactly as sent, with the commit it produced. Commit hashes refer to this repository. Housekeeping lines inside the prompts (git restores and commit requests) are cut and marked with [...].
 
 ## 12. Full CRUD for projects
 
-> The blog-posts.json changes are just test posts from my Part 2 video, please git restore that file. Don't touch the untracked files at the repo root.
+> [...]
 >
 > Then for the midterm I need full CRUD for projects. Right now projects are hard coded in lib/projects.ts. Please:
 > - move the project data into content/projects.json (same fields)
@@ -135,7 +135,7 @@ Note: moved the project data to `content/projects.json` and rewrote `lib/project
 
 ## 13. Blogs and contacts CRUD, /admin hub
 
-> Nice, that works. Please commit the projects changes first (only files in portfolio, not the untracked stuff at the root).
+> [...]
 >
 > Next do the same CRUD for blogs and contact submissions:
 > - blogs: add GET, PUT, DELETE /api/blogs/[slug]. On /admin/blogs show the list of posts with edit and delete buttons
@@ -148,7 +148,7 @@ Note: added `app/api/blogs/[slug]/route.ts` (GET/PUT/DELETE) and gave `BlogAdmin
 
 ## 14. Courses page with CRUD API and CourseCard
 
-> Great. Commit that if you haven't yet.
+> [...]
 >
 > Now my custom feature: a Courses page that shows the MSBA courses I've taken.
 > - store courses in content/courses.json (id, code, name, term, notes on what I learned)
@@ -173,10 +173,3 @@ Note: added `content/courses.json` (seeded with ISBA 2438), `lib/courses.ts`, `a
 > Then build and commit.
 
 Note: added `app/todo/page.tsx` and `components/TodoList.tsx` (add with title, due date, priority; check off; delete; clear all; one `persist` helper saves with `JSON.stringify` under `study-todos` and the load reads back with `JSON.parse`; broken saved data starts an empty list with a message instead of crashing). `FormField` now also accepts `type="date"`. Commit `34af066`.
-
-## 16. Midterm prompt log
-
-> Thanks! Last step: add a "Midterm" section to PROMPTS.md at the repo root with the main prompts I sent in this chat (skip the git status one and the "continue" one), with the line "These prompts were drafted with help from Claude." like in Part 2. Only add PROMPTS.md, not the other untracked files at the root. Then commit, git push, and tell me the full commit SHA.
-
-Note: added this Midterm section. Commit: this commit.
- Checked by opening the post on /blogs: it now shows the corrected wording.
