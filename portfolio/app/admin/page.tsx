@@ -17,6 +17,11 @@ const adminLinks = [
     description: "Create, edit, and delete projects.",
   },
   {
+    href: "/courses",
+    label: "Courses",
+    description: "Create, edit, and delete courses on the courses page.",
+  },
+  {
     href: "/admin/contacts",
     label: "Contact admin",
     description: "Review, add, edit, and delete contact submissions.",
